@@ -1,4 +1,7 @@
-﻿using System;
+﻿using SALES.Models;
+using SALES.Patterns;
+using SALES.Repositories;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,6 +14,10 @@ namespace SALES.ViewModels
     public class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public IDataStore<Employee> EmployeeDataStore => IoC.Resolve<EmployeeDataStore>();
+        public IDataStore<Product> ProductDataStore => IoC.Resolve<ProductDataStore>();
+        public IDataStore<Sale> SaleDataStore => IoC.Resolve<SaleDateStore>();
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

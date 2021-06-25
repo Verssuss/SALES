@@ -7,6 +7,26 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="1" Grid.Column="0"/>
+        <DataGrid Grid.Row="1" Grid.Column="1"/>
+        <DataGrid Grid.Row="1" Grid.Column="2"/>
+        <Button Content="Добавить сотрудника" Grid.Row="2" Grid.Column="0" />
+        <Button Content="Добавить продукт" Grid.Row="2" Grid.Column="1" />
+        <Button Content="Добавить продажу" Grid.Row="2" Grid.Column="2" />
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="3" />
+            </Style>
+        </Grid.Resources>
     </Grid>
 </Window>
