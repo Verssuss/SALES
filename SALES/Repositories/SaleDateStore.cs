@@ -25,7 +25,7 @@ namespace SALES.Repositories
 
         public async Task<bool> DeleteItemAsync(int id)
         {
-            var item = await dbContext.Sales.FirstAsync(x => x.Id == id);
+            var item = await dbContext.Sales.FirstOrDefaultAsync(x => x.Id == id);
             if (item != null)
             {
                 dbContext.Sales.Remove(item);

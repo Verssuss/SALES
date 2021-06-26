@@ -58,35 +58,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <SolidColorBrush x:Key="Button.MouseOver.Background"        Color="#FF707070"/>
-        <SolidColorBrush x:Key="Button.MouseOver.Border"            Color="#FF3C7FB1"/>
-        <SolidColorBrush x:Key="Button.Pressed.Background"          Color="#FFC4E5F6"/>
-        <SolidColorBrush x:Key="Button.Pressed.Border"               Color="#FF2C628B"/>
-        <SolidColorBrush x:Key="Button.Disabled.Background"          Color="#FFF4F4F4"/>
-        <SolidColorBrush x:Key="Button.Disabled.Border"             Color="#FFADB2B5"/>
-        <SolidColorBrush x:Key="Button.Disabled.Foreground"             Color="#FF838383"/>
-        <ControlTemplate x:Key="ButtonTemplate" TargetType="{x:Type ButtonBase}">
-            <Border x:Name="border" CornerRadius="15" Background="Black" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true">
-                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-            </Border>
-            <ControlTemplate.Triggers>
-                <Trigger Property="Button.IsDefaulted" Value="true">
-                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
-                </Trigger>
-                <Trigger Property="IsPressed" Value="true">
-                    <Setter Property="Margin" Value="5" />
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="false">
-                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
-                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
+
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -102,7 +74,7 @@
         <TextBlock Text="Сотрудники" Grid.Row="0" Grid.Column="0" />
         <TextBlock Text="Продукты" Grid.Row="0" Grid.Column="1" />
         <TextBlock Text="Продажи" Grid.Row="0" Grid.Column="2" />
-        <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Employees}" ItemContainerStyle="{StaticResource ListViewItem}">
+        <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}" ItemContainerStyle="{StaticResource ListViewItem}">
             <ListView.ItemTemplate >
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -125,7 +97,7 @@
                 </ControlTemplate>
             </ListView.Template>
         </ListView>
-        <ListView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Products}" ItemContainerStyle="{StaticResource ListViewItem}">
+        <ListView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" ItemContainerStyle="{StaticResource ListViewItem}">
             <ListView.ItemTemplate >
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -148,7 +120,7 @@
                 </ControlTemplate>
             </ListView.Template>
         </ListView>
-        <ListView Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Sales}" ItemContainerStyle="{StaticResource ListViewItem}">
+        <ListView Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Sales}" SelectedItem="{Binding SelectedSale}" ItemContainerStyle="{StaticResource ListViewItem}">
             <ListView.ItemTemplate >
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -183,9 +155,30 @@
                 </ControlTemplate>
             </ListView.Template>
         </ListView>
-        <Button Template="{DynamicResource ButtonTemplate}" Content="Добавить сотрудника" Grid.Row="2" Grid.Column="0" />
-        <Button Template="{DynamicResource ButtonTemplate}" Content="Добавить продукт" Grid.Row="2" Grid.Column="1" />
-        <Button Template="{DynamicResource ButtonTemplate}" Content="Добавить продажу" Grid.Row="2" Grid.Column="2" />
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Command="{Binding AddEmployee}" Template="{DynamicResource ButtonTemplate}" Content="Добавить сотрудника"   Grid.Row="0" Grid.Column="0" />
+            <Button Command="{Binding RemoveEmployee}" Template="{DynamicResource ButtonTemplate}" Content="Удалить сотрудника" Grid.Row="0" Grid.Column="1" />
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+        <Button Command="{Binding AddProduct}" Template="{DynamicResource ButtonTemplate}" Content="Добавить продукт" Grid.Row="0" Grid.Column="0" />
+            <Button Command="{Binding RemoveProduct}" Template="{DynamicResource ButtonTemplate}" Content="Удалить продукт" Grid.Row="0" Grid.Column="1" />
+        </Grid>
+        <Grid  Grid.Row="2" Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+        <Button Command="{Binding AddSale}" Template="{DynamicResource ButtonTemplate}" Content="Добавить продажу" Grid.Column="0" />
+        <Button Command="{Binding RemoveSale}" Template="{DynamicResource ButtonTemplate}" Content="Удалить продажу" Grid.Column="1" />
+        </Grid>
         <Grid.Resources>
             <Style TargetType="Button">
                 <Setter Property="Margin" Value="3" />

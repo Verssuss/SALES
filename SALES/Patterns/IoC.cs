@@ -16,10 +16,10 @@ namespace SALES.Patterns
         static IoC()
         {
             var services = new ServiceCollection();
-            services.AddSingleton<EmployeeDataStore>();
-            services.AddSingleton<ProductDataStore>();
-            services.AddSingleton<SaleDateStore>();
-            services.AddScoped<ApplicationDbContext>();
+            services.AddTransient<EmployeeDataStore>();
+            services.AddTransient<ProductDataStore>();
+            services.AddTransient<SaleDateStore>();
+            services.AddSingleton<ApplicationDbContext>();
             services.AddTransient<ViewModel>();
 
             _provider = services.BuildServiceProvider();
