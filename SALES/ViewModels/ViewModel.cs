@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SALES.ViewModels
 {
@@ -93,6 +94,15 @@ namespace SALES.ViewModels
                 Sales.Remove(SelectedSale);
                 SelectedSale = Sales.FirstOrDefault();
             }, (_) => SelectedSale != null && isBusy == false);
+        }
+
+        public DelegateCommand ShowGraph
+        {
+            get => new DelegateCommand(async (_) =>
+            {
+                var chart = new Chart(SelectedEmployee);
+                chart.Show();
+            }, (_) => SelectedEmployee != null && isBusy == false);
         }
 
         public Employee SelectedEmployee { get; set; }

@@ -129,7 +129,10 @@
                                 <ImageBrush ImageSource="/photo.png"/>
                             </Border.Background>
                         </Border>
-                        <TextBlock Text="{Binding Employee.Name}" Margin="15 0 0 0" VerticalAlignment="Center" FontSize="23" HorizontalAlignment="Center"/>
+                        <StackPanel Orientation="Vertical" Margin="15 0 0 0">
+                            <TextBlock Text="{Binding Employee.Name}" VerticalAlignment="Center" FontSize="23" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding SaleDate, StringFormat=m}" FontSize="15" />
+                        </StackPanel>
                         <Border CornerRadius="20" Width="50" Height="50">
                             <Border.Background >
                                 <ImageBrush ImageSource="/products.png"/>
@@ -159,16 +162,18 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Command="{Binding AddEmployee}" Template="{DynamicResource ButtonTemplate}" Content="Добавить сотрудника"   Grid.Row="0" Grid.Column="0" />
-            <Button Command="{Binding RemoveEmployee}" Template="{DynamicResource ButtonTemplate}" Content="Удалить сотрудника" Grid.Row="0" Grid.Column="1" />
+            <Button Command="{Binding AddEmployee}" Template="{DynamicResource ButtonTemplate}" Content="Добавить"   Grid.Row="0" Grid.Column="0" />
+            <Button Command="{Binding ShowGraph}" Template="{DynamicResource ButtonTemplate}" Content="График" Grid.Column="1" />
+            <Button Command="{Binding RemoveEmployee}" Template="{DynamicResource ButtonTemplate}" Content="Удалить" Grid.Row="0" Grid.Column="2" />
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-        <Button Command="{Binding AddProduct}" Template="{DynamicResource ButtonTemplate}" Content="Добавить продукт" Grid.Row="0" Grid.Column="0" />
+            <Button Command="{Binding AddProduct}" Template="{DynamicResource ButtonTemplate}" Content="Добавить продукт" Grid.Row="0" Grid.Column="0" />
             <Button Command="{Binding RemoveProduct}" Template="{DynamicResource ButtonTemplate}" Content="Удалить продукт" Grid.Row="0" Grid.Column="1" />
         </Grid>
         <Grid  Grid.Row="2" Grid.Column="2">
@@ -176,8 +181,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-        <Button Command="{Binding AddSale}" Template="{DynamicResource ButtonTemplate}" Content="Добавить продажу" Grid.Column="0" />
-        <Button Command="{Binding RemoveSale}" Template="{DynamicResource ButtonTemplate}" Content="Удалить продажу" Grid.Column="1" />
+            <Button Command="{Binding AddSale}" Template="{DynamicResource ButtonTemplate}" Content="Добавить" Grid.Column="0" />
+            <Button Command="{Binding RemoveSale}" Template="{DynamicResource ButtonTemplate}" Content="Удалить" Grid.Column="1" />
         </Grid>
         <Grid.Resources>
             <Style TargetType="Button">
