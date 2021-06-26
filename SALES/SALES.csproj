@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\photo.png" />
+    <None Remove="money.png" />
+    <None Remove="photo.png" />
+    <None Remove="products.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="View\" />
     <Folder Include="Converters\" />
   </ItemGroup>
@@ -22,6 +29,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="money.png" />
+    <Resource Include="photo.png" />
+    <Resource Include="products.png" />
   </ItemGroup>
 
 </Project>

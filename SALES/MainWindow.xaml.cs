@@ -24,8 +24,6 @@ namespace SALES
         public MainWindow()
         {
             InitializeComponent();
-            SaleViewModel vb = new SaleViewModel();
-            vb.Load();
         }
     }
 }

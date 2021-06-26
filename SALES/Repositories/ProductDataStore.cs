@@ -36,13 +36,13 @@ namespace SALES.Repositories
 
         public async Task<Product> GetItemAsync(int id)
         {
-            var item = await dbContext.Products.FirstAsync(x => x.Id == id);
+            var item = await dbContext.Products.Include(x => x.Sales).FirstAsync(x => x.Id == id);
             return item;
         }
 
         public async Task<IEnumerable<Product>> GetItemsAsync(bool forceRefresh = false)
         {
-            var allitems = await dbContext.Products.ToListAsync().ConfigureAwait(false);
+            var allitems = await dbContext.Products.Include(x => x.Sales).ToListAsync().ConfigureAwait(false);
             return await Task.FromResult(allitems);
         }
 

@@ -20,9 +20,7 @@ namespace SALES.Patterns
             services.AddSingleton<ProductDataStore>();
             services.AddSingleton<SaleDateStore>();
             services.AddScoped<ApplicationDbContext>();
-            services.AddTransient<SaleViewModel>();
-            services.AddTransient<ProductViewModel>();
-            services.AddTransient<EmployeeViewModel>();
+            services.AddTransient<ViewModel>();
 
             _provider = services.BuildServiceProvider();
 

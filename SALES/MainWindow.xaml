@@ -4,8 +4,90 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SALES"
+        xmlns:vm="clr-namespace:SALES.ViewModels"
         mc:Ignorable="d"
+        Background="Wheat"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:ViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="ListViewItem" x:Key="ListViewItem">
+            <Setter Property="Template" >
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Border x:Name="Bd" CornerRadius="30"
+                                         BorderBrush="{TemplateBinding BorderBrush}"
+                                         BorderThickness="{TemplateBinding BorderThickness}"
+                                         Background="{TemplateBinding Background}"
+                                         Padding="{TemplateBinding Padding}"
+                                         SnapsToDevicePixels="true">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive"
+                                                               Value="False" />
+                                    <Condition Property="IsSelected"
+                                                               Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background"
+                                                               TargetName="Bd"
+                                                               Value="#AAFF8C00" />
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive"
+                                                               Value="True" />
+                                    <Condition Property="IsSelected"
+                                                               Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background"
+                                                        TargetName="Bd"
+                                                        Value="#80ff4500" />
+                            </MultiTrigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#80FFFFFF" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.MouseOver.Background"        Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border"            Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background"          Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border"               Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background"          Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border"             Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground"             Color="#FF838383"/>
+        <ControlTemplate x:Key="ButtonTemplate" TargetType="{x:Type ButtonBase}">
+            <Border x:Name="border" CornerRadius="15" Background="Black" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true">
+                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsDefaulted" Value="true">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="true">
+                    <Setter Property="Margin" Value="5" />
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -17,15 +99,103 @@
             <RowDefinition Height="100*"/>
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="1" Grid.Column="0"/>
-        <DataGrid Grid.Row="1" Grid.Column="1"/>
-        <DataGrid Grid.Row="1" Grid.Column="2"/>
-        <Button Content="Добавить сотрудника" Grid.Row="2" Grid.Column="0" />
-        <Button Content="Добавить продукт" Grid.Row="2" Grid.Column="1" />
-        <Button Content="Добавить продажу" Grid.Row="2" Grid.Column="2" />
+        <TextBlock Text="Сотрудники" Grid.Row="0" Grid.Column="0" />
+        <TextBlock Text="Продукты" Grid.Row="0" Grid.Column="1" />
+        <TextBlock Text="Продажи" Grid.Row="0" Grid.Column="2" />
+        <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Employees}" ItemContainerStyle="{StaticResource ListViewItem}">
+            <ListView.ItemTemplate >
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Border CornerRadius="20" Width="50" Height="50">
+                            <Border.Background >
+                                <ImageBrush ImageSource="/photo.png"/>
+                            </Border.Background>
+                        </Border>
+                        <TextBlock Text="{Binding Name}" Margin="15 0 0 0" VerticalAlignment="Center" FontSize="23" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Template>
+                <ControlTemplate>
+                    <Border CornerRadius="30" BorderBrush="Black" BorderThickness="2" Margin="5" >
+                        <ScrollViewer>
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </ListView.Template>
+        </ListView>
+        <ListView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Products}" ItemContainerStyle="{StaticResource ListViewItem}">
+            <ListView.ItemTemplate >
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Border CornerRadius="20" Width="50" Height="50">
+                            <Border.Background >
+                                <ImageBrush ImageSource="/products.png"/>
+                            </Border.Background>
+                        </Border>
+                        <TextBlock Text="{Binding Name}" Margin="15 0 0 0" VerticalAlignment="Center" FontSize="23" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Template>
+                <ControlTemplate>
+                    <Border CornerRadius="30" BorderBrush="Black" BorderThickness="2" Margin="5" >
+                        <ScrollViewer>
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </ListView.Template>
+        </ListView>
+        <ListView Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Sales}" ItemContainerStyle="{StaticResource ListViewItem}">
+            <ListView.ItemTemplate >
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Border CornerRadius="20" Width="50" Height="50">
+                            <Border.Background >
+                                <ImageBrush ImageSource="/photo.png"/>
+                            </Border.Background>
+                        </Border>
+                        <TextBlock Text="{Binding Employee.Name}" Margin="15 0 0 0" VerticalAlignment="Center" FontSize="23" HorizontalAlignment="Center"/>
+                        <Border CornerRadius="20" Width="50" Height="50">
+                            <Border.Background >
+                                <ImageBrush ImageSource="/products.png"/>
+                            </Border.Background>
+                        </Border>
+                        <TextBlock Text="{Binding Product.Name}" Margin="15 0 0 0" VerticalAlignment="Center" FontSize="23" HorizontalAlignment="Center"/>
+                        <Border CornerRadius="20" Width="50" Height="50">
+                            <Border.Background >
+                                <ImageBrush ImageSource="/money.png"/>
+                            </Border.Background>
+                        </Border>
+                        <TextBlock Text="{Binding Sum}" Margin="15 0 0 0" VerticalAlignment="Center" FontSize="23" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Template>
+                <ControlTemplate>
+                    <Border CornerRadius="30" BorderBrush="Black" BorderThickness="2" Margin="5" >
+                        <ScrollViewer>
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </ListView.Template>
+        </ListView>
+        <Button Template="{DynamicResource ButtonTemplate}" Content="Добавить сотрудника" Grid.Row="2" Grid.Column="0" />
+        <Button Template="{DynamicResource ButtonTemplate}" Content="Добавить продукт" Grid.Row="2" Grid.Column="1" />
+        <Button Template="{DynamicResource ButtonTemplate}" Content="Добавить продажу" Grid.Row="2" Grid.Column="2" />
         <Grid.Resources>
             <Style TargetType="Button">
                 <Setter Property="Margin" Value="3" />
+                <Setter Property="Foreground" Value="White" />
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="35" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="FontWeight" Value="Bold" />
             </Style>
         </Grid.Resources>
     </Grid>

@@ -25,8 +25,8 @@ namespace SALES
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Sale>().HasOne(x => x.Product).WithMany(x => x.Sales);
-            //modelBuilder.Entity<Sale>().HasOne(x => x.Employee).WithMany(x => x.Sales);
+            modelBuilder.Entity<Product>().HasMany(x => x.Sales).WithOne(x => x.Product);
+            modelBuilder.Entity<Employee>().HasMany(x => x.Sales).WithOne(x => x.Employee);
 
             var emp = new Employee { Id = 1, Name = "Игорь" };
             var emp2 = new Employee { Id = 2, Name = "Степан" };
